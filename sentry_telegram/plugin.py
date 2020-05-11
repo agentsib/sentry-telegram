@@ -92,7 +92,7 @@ class TelegramNotificationsPlugin(notify.NotificationPlugin):
                 'label': 'Message Template',
                 'type': 'textarea',
                 'help': 'Set in standard python\'s {}-format convention, available names are: '
-                    '{project_name}, {url}, {title}, {message}, {tag[%your_tag%]}. Undefined tags will be shown as [NA]',
+                    '{project_name}, {url}, {event_url}, {title}, {message}, {tag[%your_tag%]}. Undefined tags will be shown as [NA]',
                 'validators': [],
                 'required': True,
                 'default': '*[Sentry]* {project_name} {tag[level]}: *{title}*\n```{message}```\n{url}'
@@ -108,6 +108,7 @@ class TelegramNotificationsPlugin(notify.NotificationPlugin):
             'message': event.message,
             'project_name': group.project.name,
             'url': group.get_absolute_url(),
+            'event_url': event.get_absolute_url(),
         }
 
         template = self.get_message_template(group.project)
